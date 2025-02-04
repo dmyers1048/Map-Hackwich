@@ -9,17 +9,12 @@ import SwiftUI
 import MapKit
 
 struct ContentView: View {
-    @State private var startPosition = MapCameraPosition.region(
-        MKCoordinateRegion(center: CLLocationCoordinate2D(
-            latitude: 42.15559,
-            longitude: -88.14692),
-                           span: MKCoordinateSpan(
-                            latitudeDelta: 0.05,
-                            longitudeDelta: 0.05)
-        )
-    )
+    @StateObject var locationManager = LocationManager()
+    @State private var startPosition = MapCameraPosition.userLocation(fallback: .automatic)
     var body: some View {
-        Map(position: $startPosition)
+        Map(position: $startPosition) {
+            UserAnnotation()
+        }
     }
 }
 
