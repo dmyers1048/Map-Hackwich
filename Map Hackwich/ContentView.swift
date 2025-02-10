@@ -22,15 +22,13 @@ struct ContentView: View {
                     UserAnnotation()
                     ForEach(places)
             { place in
-                        Annotation(place.mapItem.name!, coordinate: place.mapItem.placemark.coordinate)
-                {
-                            Image(systemName: "star.circle")
-                                .resizable()
-                                .foregroundStyle(.red)
-                                .frame(width: 44, height: 44)
-                                .background(.white)
-                                .clipShape(.circle)
-                }
+                Annotation(place.mapItem.name!, coordinate: place.mapItem.placemark.coordinate) {
+                                    if let url = place.mapItem.url {
+                                        Link(destination: url, label: {
+                                            Image("pizza")
+                                        })
+                                    }
+                                }
             }
         }
         .onMapCameraChange { context in
