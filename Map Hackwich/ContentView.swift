@@ -19,23 +19,19 @@ struct ContentView: View {
     {
         Map(position: $startPosition)
         {
-                    UserAnnotation()
-                    ForEach(places)
-            { place in
+            UserAnnotation()
+            ForEach(places) { place in
                 Annotation(place.mapItem.name!, coordinate: place.mapItem.placemark.coordinate) {
-                                    if let url = place.mapItem.url {
-                                        Link(destination: url, label: {
-                                            Image("pizza")
-                                        })
-                                    }
-                                }
+                    NavigationLink(destination: LocationDetailsView(mapItem: place.mapItem)) {
+                        Image("pizza")
+                    }
+                }
             }
         }
         .onMapCameraChange { context in
                     mapRegion = context.region
                     performSearch(item: "Pizza")
                 }
-
     }
     func performSearch(item: String) {
         let searchRequest = MKLocalSearch.Request()
